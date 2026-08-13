@@ -3,15 +3,11 @@
 	"id": "openclient",
 	"version": "${version}",
 	"name": "OpenClient",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "OpenClient is an open-source Minecraft client focusing on performance, custom HUD elements, and useful utilities.",
 	"authors": [
-		"Me!"
+		"MrKaktusik_"
 	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
+	"license": "GPL-v3",
 	"icon": "assets/openclient/icon.png",
 	"environment": "*",
 	"entrypoints": {
