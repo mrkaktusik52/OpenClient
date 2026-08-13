@@ -3,9 +3,7 @@ package com.cactus;
 import com.cactus.configs.ConfigManager;
 import com.cactus.gui.HudEditorScreen;
 import com.cactus.hud.HudModule;
-import com.cactus.hud.modules.Coords;
-import com.cactus.hud.modules.Fps;
-import com.cactus.hud.modules.SprintToggle;
+import com.cactus.hud.modules.*;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -39,6 +37,8 @@ public class OpenClient implements ModInitializer {
 		hudModules.add(new Fps());
 		hudModules.add(new SprintToggle());
 		hudModules.add(new Coords());
+		hudModules.add(new Biome());
+		hudModules.add(new Ping());
 
 		openScreen = KeyBindingHelper.registerKeyBinding(new KeyMapping(
 				"key.cactus.openclient.openhudeditor",

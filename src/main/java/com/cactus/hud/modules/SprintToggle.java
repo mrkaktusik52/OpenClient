@@ -1,10 +1,8 @@
 package com.cactus.hud.modules;
 
-import com.cactus.OpenClient;
 import com.cactus.hud.HudModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.Identifier;
 
 public class SprintToggle extends HudModule {
     public SprintToggle() {
@@ -26,14 +24,15 @@ public class SprintToggle extends HudModule {
             if (!enabled) return;
 
             assert client.player != null;
-            String text = client.player.isSprinting() ? "[Sprinting]" : client.player.isShiftKeyDown() ? "[Sneaking]": "";;
+            String text = client.player.isSprinting() ? "[Sprinting]" : client.player.isCrouching() ? "[Sneaking]": "";
+
 
             graphics.drawString(
                     client.font,
                     text,
                     (getX() + (getWidth() / 2)) - (client.font.width(text) / 2), (getY() + (getHeight() / 2)),
                     0xFFFFFFFF,
-                    false);
+                    true);
 
         }
 

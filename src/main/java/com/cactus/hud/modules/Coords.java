@@ -1,10 +1,8 @@
 package com.cactus.hud.modules;
 
-import com.cactus.OpenClient;
 import com.cactus.hud.HudModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.Identifier;
 
 public class Coords extends HudModule {
     public Coords() {
@@ -25,7 +23,6 @@ public class Coords extends HudModule {
         String x = "X: " + (int) mc.player.getX();
         String y = "Y: " + (int) mc.player.getY();
         String z = "Z: " + (int) mc.player.getZ();
-
 
         setWidth(Math.max(mc.font.width(x), Math.max(mc.font.width(y), mc.font.width(z))) + 10);
         setHeight(mc.font.lineHeight * 3 + 20);
