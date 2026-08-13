@@ -6,14 +6,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.Identifier;
 
-public class Fps extends HudModule {
-    public Fps() {
-        setX(1);
+public class Coords extends HudModule {
+    public Coords() {
+        setX(100);
         setY(10);
     }
     @Override
     public String getName() {
-        return "FPS";
+        return "Coordinates";
     }
 
     @Override
@@ -21,20 +21,24 @@ public class Fps extends HudModule {
         if (!enabled) return;
 
         Minecraft mc = Minecraft.getInstance();
-        String text = "FPS: " + mc.getFps();
+        assert mc.player != null;
+        String x = "X: " + (int) mc.player.getX();
+        String y = "Y: " + (int) mc.player.getY();
+        String z = "Z: " + (int) mc.player.getZ();
 
-        setWidth(mc.font.width(text) + 10);
-        setHeight(mc.font.lineHeight + 10);
+
+        setWidth(Math.max(mc.font.width(x), Math.max(mc.font.width(y), mc.font.width(z))) + 10);
+        setHeight(mc.font.lineHeight * 3 + 20);
 
         graphics.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x80000000);
 
-        graphics.drawString(mc.font, text, getX() + 5, getY() + 5, 0xFFFFFFFF, true);
+        graphics.drawString(mc.font, x, getX() + 5, getY() + 5, 0xFFFFFFFF, true);
+        graphics.drawString(mc.font, y, getX() + 5, getY() + mc.font.lineHeight + 10, 0xFFFFFFFF, true);
+        graphics.drawString(mc.font, z, getX() + 5, getY() + mc.font.lineHeight + 25, 0xFFFFFFFF, true);
     }
 //    public Identifier getIcon() {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
 //    };
     @Override
     public boolean hasSettings() {return true;};
-
 }
-

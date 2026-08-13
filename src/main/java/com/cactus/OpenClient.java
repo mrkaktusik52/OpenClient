@@ -3,6 +3,7 @@ package com.cactus;
 import com.cactus.configs.ConfigManager;
 import com.cactus.gui.HudEditorScreen;
 import com.cactus.hud.HudModule;
+import com.cactus.hud.modules.Coords;
 import com.cactus.hud.modules.Fps;
 import com.cactus.hud.modules.SprintToggle;
 import net.fabricmc.api.ModInitializer;
@@ -37,6 +38,7 @@ public class OpenClient implements ModInitializer {
 
 		hudModules.add(new Fps());
 		hudModules.add(new SprintToggle());
+		hudModules.add(new Coords());
 
 		openScreen = KeyBindingHelper.registerKeyBinding(new KeyMapping(
 				"key.cactus.openclient.openhudeditor",

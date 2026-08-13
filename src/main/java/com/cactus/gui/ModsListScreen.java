@@ -132,9 +132,9 @@ public class ModsListScreen extends Screen {
                 graphics.fill(left, top, left + width, top + height - 2, bgColor);
 
 
-                if (module.getIcon() != null) {
-                    graphics.blit(module.getIcon(), left + 4, centerY - 8, 0, 0, 128, 128, 128, 128);
-                }
+//                if (module.getIcon() != null) {
+//                    graphics.blit(module.getIcon(), left + 4, centerY - 8, 0, 0, 128, 128, 128, 128);
+//                }
 
 
                 graphics.drawString(ModsListScreen.this.font, module.getName(), left + 26, centerY - 4, 0xFFFFFFFF);
@@ -145,9 +145,9 @@ public class ModsListScreen extends Screen {
                 this.toggleButton.render(graphics, mouseX, mouseY, partialTick);
 
 
-                if (module.hasSettings()) {
-                    graphics.blit(GEAR_ICON, left + width - 20, centerY - 8, 0, 0, 16, 16, 16, 16);
-                }
+//                if (module.hasSettings()) {
+//                    graphics.blit(GEAR_ICON, left + width - 20, centerY - 8, 0, 0, 16, 16, 16, 16);
+//                }
             }
 
             @Override
