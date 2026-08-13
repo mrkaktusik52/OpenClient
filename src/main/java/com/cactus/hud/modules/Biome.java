@@ -38,7 +38,6 @@ public class Biome extends HudModule {
         String text = "Biome: " + formatted.toString().trim();
 //        String text = "Biome: " + mc.level.getBiome(mc.player.blockPosition()).getRegisteredName();
 
-
         setWidth(mc.font.width(text) + 10);
         setHeight(mc.font.lineHeight + 10);
 
