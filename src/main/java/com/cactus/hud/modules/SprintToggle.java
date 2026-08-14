@@ -66,6 +66,10 @@ public class SprintToggle extends HudModule {
 //    public Identifier getIcon() {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
 //    };
+@Override
+public String getId() {
+    return "sprintdisplay";
+}
 }
 
 

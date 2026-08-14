@@ -94,4 +94,8 @@ public class Keystrokes extends HudModule {
 
     @Override
     public String getName() { return "Keystrokes"; }
+    @Override
+    public String getId() {
+        return "keystrokes";
+    }
 }

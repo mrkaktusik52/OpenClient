@@ -37,7 +37,7 @@ public class ConfigManager {
         ensureDirectories();
 
         for (HudModule module : OpenClient.hudModules) {
-            Path file = MODULES_DIR.resolve(module.getName() + ".json");
+            Path file = MODULES_DIR.resolve(module.getId() + ".json");
             JsonObject json = new JsonObject();
 
             module.writeConfig(json);
@@ -45,7 +45,7 @@ public class ConfigManager {
             try (BufferedWriter writer = Files.newBufferedWriter(file)) {
                 GSON.toJson(json, writer);
             } catch (IOException e) {
-                OpenClient.LOGGER.error("Failed to save module config: " + module.getName(), e);
+                OpenClient.LOGGER.error("Failed to save module config: " + module.getId(), e);
             }
         }
     }
@@ -54,7 +54,7 @@ public class ConfigManager {
         ensureDirectories();
 
         for (HudModule module : OpenClient.hudModules) {
-            Path file = MODULES_DIR.resolve(module.getName() + ".json");
+            Path file = MODULES_DIR.resolve(module.getId() + ".json");
 
             if (!Files.exists(file)) continue;
 
@@ -63,7 +63,7 @@ public class ConfigManager {
 
                 module.readConfig(json);
             } catch (IOException e) {
-                OpenClient.LOGGER.error("Failed to load module config: " + module.getName(), e);
+                OpenClient.LOGGER.error("Failed to load module config: " + module.getId(), e);
             }
         }
     }

@@ -73,6 +73,8 @@ public abstract class HudModule {
     public Identifier getIcon() {
         return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
     };
+    public String getId(){return "";
+    }
     public boolean hasSettings() {return true;};
     public String getName() {
         return "name";

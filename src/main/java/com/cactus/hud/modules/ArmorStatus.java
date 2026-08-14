@@ -85,4 +85,8 @@ public class ArmorStatus extends HudModule {
     public boolean hasSettings() {
         return true;
     }
+    @Override
+    public String getId() {
+        return "armorstatus";
+    }
 }
