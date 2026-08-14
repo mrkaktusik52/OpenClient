@@ -13,9 +13,9 @@ public abstract class HudModule {
     private int posX;
     private int posY;
     public boolean enabled = true;
-    private int dragOffsetX;
-    private int dragOffsetY;
-    private boolean isDragging;
+    protected int dragOffsetX;
+    protected int dragOffsetY;
+    protected boolean isDragging;
 
     private boolean isHovered(double mouseX, double mouseY) {
         return mouseX >= this.posX && mouseX <= this.posX + this.width &&
@@ -50,10 +50,10 @@ public abstract class HudModule {
             this.posY = mouseY - this.dragOffsetY;
         }
 
-        graphics.fill(posX - 1, posY - 1, posX + width + 1, posY, 0xFFFFFFFF); // верх
-        graphics.fill(posX - 1, posY + height, posX + width + 1, posY + height + 1, 0xFFFFFFFF); // низ
-        graphics.fill(posX - 1, posY, posX, posY + height, 0xFFFFFFFF); // лево
-        graphics.fill(posX + width, posY, posX + width + 1, posY + height, 0xFFFFFFFF); // право
+        graphics.fill(posX - 1, posY - 1, posX + width + 1, posY, 0xFFFFFFFF);
+        graphics.fill(posX - 1, posY + height, posX + width + 1, posY + height + 1, 0xFFFFFFFF);
+        graphics.fill(posX - 1, posY, posX, posY + height, 0xFFFFFFFF);
+        graphics.fill(posX + width, posY, posX + width + 1, posY + height, 0xFFFFFFFF);
 
         render(graphics);
     }
