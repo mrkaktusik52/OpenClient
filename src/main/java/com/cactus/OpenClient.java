@@ -42,6 +42,7 @@ public class OpenClient implements ModInitializer {
 		hudModules.add(new ArmorStatus());
 		hudModules.add(new PotionHud());
 		hudModules.add(new Keystrokes());
+		hudModules.add(new TargetHud());
 
 		openScreen = KeyBindingHelper.registerKeyBinding(new KeyMapping(
 				"key.cactus.openclient.openhudeditor",

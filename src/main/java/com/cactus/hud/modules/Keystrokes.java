@@ -1,7 +1,6 @@
 package com.cactus.hud.modules;
 
 import com.cactus.hud.HudModule;
-import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.GuiGraphics;
