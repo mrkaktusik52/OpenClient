@@ -2,7 +2,9 @@ package com.cactus.hud;
 
 
 import com.cactus.OpenClient;
+import com.cactus.settings.BooleanSetting;
 import com.cactus.settings.Setting;
+import com.cactus.settings.SliderSetting;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,7 +22,7 @@ public abstract class HudModule {
     protected int dragOffsetX;
     protected int dragOffsetY;
     protected boolean isDragging;
-    private final List<Setting<?>> settings = new ArrayList<>();
+    protected final List<Setting<?>> settings = new ArrayList<>();
 
     private boolean isHovered(double mouseX, double mouseY) {
         return mouseX >= this.posX && mouseX <= this.posX + this.width &&
@@ -65,14 +67,68 @@ public abstract class HudModule {
 
     public void render(GuiGraphics graphics){}
     public void writeConfig(JsonObject json) {
-        json.addProperty("x", this.posX);
-        json.addProperty("y", this.posY);
-        json.addProperty("enabled", this.enabled);
+        json.addProperty("x", getX());
+        json.addProperty("y", getY());
+        json.addProperty("enabled", enabled);
+
+        JsonObject settingsJson = new JsonObject();
+
+        for (Setting<?> setting : settings) {
+
+            if (setting instanceof BooleanSetting booleanSetting) {
+                settingsJson.addProperty(
+                        setting.getId(),
+                        booleanSetting.getValue()
+                );
+            }
+
+            else if (setting instanceof SliderSetting sliderSetting) {
+                settingsJson.addProperty(
+                        setting.getId(),
+                        sliderSetting.getValue()
+                );
+            }
+        }
+
+        json.add("settings", settingsJson);
     }
     public void readConfig(JsonObject json) {
-        if (json.has("x")) this.posX = json.get("x").getAsInt();
-        if (json.has("y")) this.posY = json.get("y").getAsInt();
-        if (json.has("enabled")) this.enabled = json.get("enabled").getAsBoolean();
+        if (json.has("x")) {
+            setX(json.get("x").getAsInt());
+        }
+
+        if (json.has("y")) {
+            setY(json.get("y").getAsInt());
+        }
+
+        if (json.has("enabled")) {
+            enabled = json.get("enabled").getAsBoolean();
+        }
+
+        if (!json.has("settings")) {
+            return;
+        }
+
+        JsonObject settingsJson = json.getAsJsonObject("settings");
+
+        for (Setting<?> setting : settings) {
+
+            if (!settingsJson.has(setting.getId())) {
+                continue;
+            }
+
+            if (setting instanceof BooleanSetting booleanSetting) {
+                booleanSetting.setValue(
+                        settingsJson.get(setting.getId()).getAsBoolean()
+                );
+            }
+
+            else if (setting instanceof SliderSetting sliderSetting) {
+                sliderSetting.setValue(
+                        settingsJson.get(setting.getId()).getAsDouble()
+                );
+            }
+        }
     }
 
     protected void addSetting(Setting<?> setting) {
