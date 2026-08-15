@@ -60,8 +60,7 @@ public class SprintToggle extends HudModule {
                 0xFFFFFFFF,
                 true);
     }
-    @Override
-    public boolean hasSettings() {return true;};
+
 
 //    public Identifier getIcon() {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");

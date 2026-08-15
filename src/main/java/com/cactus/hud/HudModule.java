@@ -2,10 +2,14 @@ package com.cactus.hud;
 
 
 import com.cactus.OpenClient;
+import com.cactus.settings.Setting;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.Identifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class HudModule {
     private int height;
@@ -16,6 +20,7 @@ public abstract class HudModule {
     protected int dragOffsetX;
     protected int dragOffsetY;
     protected boolean isDragging;
+    private final List<Setting<?>> settings = new ArrayList<>();
 
     private boolean isHovered(double mouseX, double mouseY) {
         return mouseX >= this.posX && mouseX <= this.posX + this.width &&
@@ -70,12 +75,22 @@ public abstract class HudModule {
         if (json.has("enabled")) this.enabled = json.get("enabled").getAsBoolean();
     }
 
+    protected void addSetting(Setting<?> setting) {
+        settings.add(setting);
+    }
+
+    public List<Setting<?>> getSettings() {
+        return settings;
+    }
+
     public Identifier getIcon() {
         return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
     };
     public String getId(){return "";
     }
-    public boolean hasSettings() {return true;};
+    public boolean hasSettings() {
+        return !settings.isEmpty();
+    }
     public String getName() {
         return "name";
     }

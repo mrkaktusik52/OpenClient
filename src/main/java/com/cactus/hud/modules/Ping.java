@@ -43,8 +43,7 @@ public class Ping extends HudModule {
     //    public Identifier getIcon() {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
 //    };
-    @Override
-    public boolean hasSettings() {return true;};
+
     @Override
     public String getId() {
         return "ping";

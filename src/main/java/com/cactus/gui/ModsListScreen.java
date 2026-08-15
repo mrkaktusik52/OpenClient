@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.jspecify.annotations.NonNull;
@@ -132,9 +133,7 @@ public class ModsListScreen extends Screen {
                 graphics.fill(left, top, left + width, top + height - 2, bgColor);
 
 
-//                if (module.getIcon() != null) {
-//                    graphics.blit(module.getIcon(), left + 4, centerY - 8, 0, 0, 128, 128, 128, 128);
-//                }
+
 
 
                 graphics.drawString(ModsListScreen.this.font, module.getName(), left + 26, centerY - 4, 0xFFFFFFFF);
@@ -144,10 +143,32 @@ public class ModsListScreen extends Screen {
                 this.toggleButton.setY(centerY - 11);
                 this.toggleButton.render(graphics, mouseX, mouseY, partialTick);
 
+                int gearX = left + width - 71;
+                int gearY = centerY - 10;
 
-//                if (module.hasSettings()) {
-//                    graphics.blit(GEAR_ICON, left + width - 20, centerY - 8, 0, 0, 16, 16, 16, 16);
-//                }
+                if (module.hasSettings()) {
+                    graphics.blit(
+                            RenderPipelines.GUI_TEXTURED,
+                            GEAR_ICON,
+                            gearX,
+                            gearY,
+                            0,
+                            0,
+                            16,
+                            16,
+                            16,
+                            16
+                    );
+                }
+
+
+//                graphics.fill(
+//                        gearX,
+//                        gearY,
+//                        gearX + 16,
+//                        gearY + 16,
+//                        0xFFFF0000
+//                );
             }
 
             @Override
@@ -170,9 +191,19 @@ public class ModsListScreen extends Screen {
 
                 double mx = event.x();
                 double my = event.y();
-                int gx = left + width - 20;
-                if (module.hasSettings() && mx >= gx && mx <= gx + 16 && my >= centerY - 8 && my <= centerY + 8) {
-                    Minecraft.getInstance().setScreen(new ModuleSettingsScreen(ModsListScreen.this, module));
+
+                int gx = left + width - 71;
+
+                if (module.hasSettings()
+                        && mx >= gx
+                        && mx <= gx + 16
+                        && my >= centerY - 8
+                        && my <= centerY + 8) {
+
+                    Minecraft.getInstance().setScreen(
+                            new ModuleSettingsScreen(ModsListScreen.this, module)
+                    );
+
                     return true;
                 }
 
