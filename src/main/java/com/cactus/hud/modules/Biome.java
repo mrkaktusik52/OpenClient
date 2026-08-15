@@ -1,6 +1,7 @@
 package com.cactus.hud.modules;
 
 import com.cactus.hud.HudModule;
+import com.cactus.settings.BooleanSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -8,6 +9,8 @@ public class Biome extends HudModule {
     public Biome() {
         setX(1);
         setY(50);
+
+        addSetting(showPrefix);
     }
     @Override
     public String getName() {
@@ -35,7 +38,8 @@ public class Biome extends HudModule {
             }
         }
 
-        String text = "Biome: " + formatted.toString().trim();
+        String text = showPrefix.getValue() ?
+                "Biome: " + formatted.toString().trim() : formatted.toString().trim();
 //        String text = "Biome: " + mc.level.getBiome(mc.player.blockPosition()).getRegisteredName();
 
         setWidth(mc.font.width(text) + 10);
@@ -48,6 +52,13 @@ public class Biome extends HudModule {
     //    public Identifier getIcon() {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
 //    };
+
+    private final BooleanSetting showPrefix =
+            new BooleanSetting(
+                    "Show Prefix",
+                    "showPrefix",
+                    true
+            );
 
     @Override
     public String getId() {

@@ -1,6 +1,7 @@
 package com.cactus.hud.modules;
 
 import com.cactus.hud.HudModule;
+import com.cactus.settings.BooleanSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,6 +22,8 @@ public class ArmorStatus extends HudModule {
         setY(50);
         setHeight(15 * 4 + 1);
         setWidth(16);
+
+        addSetting(showDurability);
     }
 
     @Override
@@ -80,6 +83,13 @@ public class ArmorStatus extends HudModule {
             yOffset += 15;
         }
     }
+
+    private final BooleanSetting showDurability =
+            new BooleanSetting(
+                    "Show Durability",
+                    "showDurability",
+                    true
+            );
 
     @Override
     public String getId() {

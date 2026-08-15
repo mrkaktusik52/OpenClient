@@ -41,14 +41,20 @@ public class TargetHud extends HudModule {
         addSetting(timeout);
     }
 
+    @Override
+    public String getName() {
+        return "Target HUD";
+    }
+
     private void validateTarget() {
         if (lastHit == null) return;
 
         long now = System.currentTimeMillis();
+        long timeoutMs = (long) (timeout.getValue() * 1000.0);
 
         if (!lastHit.isAlive()
                 || lastHit.isRemoved()
-                || now - lastTargetTime > TARGET_TIMEOUT) {
+                || now - lastTargetTime > timeoutMs) {
             lastHit = null;
         }
     }
