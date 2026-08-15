@@ -9,6 +9,10 @@ public class Coords extends HudModule {
     public Coords() {
         setX(100);
         setY(10);
+
+        addSetting(showX);
+        addSetting(showY);
+        addSetting(showZ);
     }
     @Override
     public String getName() {

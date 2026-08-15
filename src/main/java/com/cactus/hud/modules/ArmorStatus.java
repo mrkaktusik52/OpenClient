@@ -69,6 +69,7 @@ public class ArmorStatus extends HudModule {
                     int currentDurability = stack.getMaxDamage() - stack.getDamageValue();
                     String durabilityText = String.valueOf(currentDurability);
 
+                    if (showDurability.getValue()) {
                     graphics.drawString(
                             client.font,
                             durabilityText,
@@ -76,7 +77,7 @@ public class ArmorStatus extends HudModule {
                             getY() + yOffset + 4,
                             getColor(stack),
                             true
-                    );
+                    );}
                 }
             }
 

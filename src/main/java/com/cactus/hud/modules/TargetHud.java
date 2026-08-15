@@ -7,6 +7,9 @@ import com.cactus.settings.SliderSetting;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,7 +24,14 @@ public class TargetHud extends HudModule {
     private Entity lastHit = null;
     private long lastTargetTime;
 
-    private static final long TARGET_TIMEOUT = 4000; // 4 секунды
+    private static final Identifier HEART_CONTAINER =
+            Identifier.withDefaultNamespace("hud/heart/container");
+
+    private static final Identifier HEART_FULL =
+            Identifier.withDefaultNamespace("hud/heart/full");
+
+    private static final Identifier HEART_HALF =
+            Identifier.withDefaultNamespace("hud/heart/half");
 
     public TargetHud() {
 
@@ -44,6 +54,53 @@ public class TargetHud extends HudModule {
     @Override
     public String getName() {
         return "Target HUD";
+    }
+
+    private void renderHearts(
+            GuiGraphics graphics,
+            float health,
+            float maxHealth,
+            int x,
+            int y
+    ) {
+        int maxHearts = Mth.ceil(maxHealth / 2.0F);
+        int healthPoints = Mth.ceil(health);
+
+        for (int i = 0; i < maxHearts; i++) {
+            int heartX = x + i * 8;
+
+            // Пустое сердце
+            graphics.blitSprite(
+                    RenderPipelines.GUI_TEXTURED,
+                    HEART_CONTAINER,
+                    heartX,
+                    y,
+                    9,
+                    9
+            );
+
+            int hpIndex = i * 2;
+
+            if (hpIndex + 1 < healthPoints) {
+                graphics.blitSprite(
+                        RenderPipelines.GUI_TEXTURED,
+                        HEART_FULL,
+                        heartX,
+                        y,
+                        9,
+                        9
+                );
+            } else if (hpIndex < healthPoints) {
+                graphics.blitSprite(
+                        RenderPipelines.GUI_TEXTURED,
+                        HEART_HALF,
+                        heartX,
+                        y,
+                        9,
+                        9
+                );
+            }
+        }
     }
 
     private void validateTarget() {
@@ -92,7 +149,7 @@ public class TargetHud extends HudModule {
         int gap = 2;
         int lineHeight = mc.font.lineHeight;
 
-        String healthText = hp + " / " + maxHp;
+
 
 
 
@@ -100,12 +157,18 @@ public class TargetHud extends HudModule {
         int height = padding + lineHeight;
 
         if (showHealth.getValue()) {
+            int heartCount = Mth.ceil(maxHp / 2.0F);
+
+            int heartsWidth = heartCount > 0
+                    ? (heartCount - 1) * 8 + 9
+                    : 0;
+
             width = Math.max(
                     width,
-                    mc.font.width(healthText) + padding * 2
+                    heartsWidth + padding * 2
             );
 
-            height += gap + lineHeight;
+            height += gap + 9;
         }
 
         if (showArmor.getValue()) {
@@ -150,15 +213,15 @@ public class TargetHud extends HudModule {
         if (showHealth.getValue()) {
             yOffset += gap;
 
-            graphics.drawString(
-                    mc.font,
-                    healthText,
+            renderHearts(
+                    graphics,
+                    hp,
+                    maxHp,
                     getX() + padding,
-                    yOffset,
-                    0xFFFFFFFF
+                    yOffset
             );
 
-            yOffset += lineHeight;
+            yOffset += 9;
         }
 
         if (showArmor.getValue()) {
