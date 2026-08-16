@@ -5,6 +5,9 @@ import com.cactus.OpenClient;
 import com.cactus.settings.BooleanSetting;
 import com.cactus.settings.Setting;
 import com.cactus.settings.SliderSetting;
+import com.cactus.social.notification.Notification;
+import com.cactus.social.notification.NotificationManager;
+import com.cactus.social.notification.NotificationType;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -128,6 +131,28 @@ public abstract class HudModule {
                         settingsJson.get(setting.getId()).getAsDouble()
                 );
             }
+        }
+    }
+    public void toggle() {
+        enabled = !enabled;
+        onToggle();
+    }
+
+    protected void onToggle() {
+        if (enabled) {
+            NotificationManager.push(
+                    getName(),
+                    "Module enabled",
+                    NotificationType.INFO,
+                    4000
+            );
+        } else {
+            NotificationManager.push(
+                    getName(),
+                    "Module disabled",
+                    NotificationType.INFO,
+                    4000
+            );
         }
     }
 

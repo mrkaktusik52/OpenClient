@@ -76,13 +76,8 @@ public class ModuleSettingsScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-
         super.render(graphics, mouseX, mouseY, delta);
-
-
         graphics.drawCenteredString(this.font, this.title, this.width / 2, 12, 0xFFFFFFFF);
-
-
     }
 
     @Override

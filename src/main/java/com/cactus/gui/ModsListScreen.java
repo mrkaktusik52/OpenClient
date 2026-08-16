@@ -2,6 +2,8 @@ package com.cactus.gui;
 
 import com.cactus.OpenClient;
 import com.cactus.hud.HudModule;
+import com.cactus.social.notification.NotificationManager;
+import com.cactus.social.notification.NotificationType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -15,39 +17,27 @@ import org.jspecify.annotations.NonNull;
 
 
 public class ModsListScreen extends Screen {
-
-
     private static final Identifier GEAR_ICON =
             Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/gear.png");
 
-
-
     private final Screen parent;
-
-
     private ModuleList list;
 
     public ModsListScreen(Screen parent) {
-
         super(Component.translatable("key.kaktus.list.title"));
         this.parent = parent;
     }
-
 
     @Override
     protected void init() {
 
         this.list = new ModuleList(this.minecraft, this.width, this.height - 60, 32, 26);
 
-
         for (HudModule module : OpenClient.hudModules) {
             this.list.addModule(module);
         }
 
-
         this.addRenderableWidget(this.list);
-
-
         this.addRenderableWidget(Button.builder(Component.translatable("key.kaktus.list.back"), btn ->
 
                 this.minecraft.setScreen(this.parent)
@@ -64,13 +54,10 @@ public class ModsListScreen extends Screen {
         graphics.drawCenteredString(this.font, this.title, this.width / 2, 12, 0xFFFFFFFF);
     }
 
-
     @Override
     public boolean isPauseScreen() {
         return false;
     }
-
-
 
     private class ModuleList extends ObjectSelectionList<ModuleList.ModuleEntry> {
 
@@ -81,18 +68,14 @@ public class ModsListScreen extends Screen {
             this.itemH = itemHeight;
         }
 
-
         public void addModule(HudModule module) {
             this.addEntry(new ModuleEntry(module));
         }
-
 
         @Override
         public int getRowWidth() {
             return Math.min(400, this.width - 20);
         }
-
-
 
         public class ModuleEntry extends ObjectSelectionList.Entry<ModuleEntry> {
 
@@ -107,7 +90,7 @@ public class ModsListScreen extends Screen {
                         Component.translatable(module.enabled ? "key.kaktus.list.on" : "key.kaktus.list.off"),
                         btn -> {
 
-                            module.enabled = !module.enabled;
+                            module.toggle();
 
                             btn.setMessage(Component.translatable(module.enabled ? "key.kaktus.list.on" : "key.kaktus.list.off"));
                         }
@@ -128,16 +111,10 @@ public class ModsListScreen extends Screen {
                 int height = 28;
                 int centerY = top + height / 2;
 
-
                 int bgColor = hovered ? 0x80555555 : 0x60000000;
                 graphics.fill(left, top, left + width, top + height - 2, bgColor);
 
-
-
-
-
                 graphics.drawString(ModsListScreen.this.font, module.getName(), left + 26, centerY - 4, 0xFFFFFFFF);
-
 
                 this.toggleButton.setX(left + width - 50);
                 this.toggleButton.setY(centerY - 11);
@@ -161,14 +138,6 @@ public class ModsListScreen extends Screen {
                     );
                 }
 
-
-//                graphics.fill(
-//                        gearX,
-//                        gearY,
-//                        gearX + 16,
-//                        gearY + 16,
-//                        0xFFFF0000
-//                );
             }
 
             @Override
@@ -179,15 +148,12 @@ public class ModsListScreen extends Screen {
                 int width = ModuleList.this.getRowWidth();
                 int centerY = top + ModuleList.this.itemH / 2;
 
-
                 this.toggleButton.setX(left + width - 50);
                 this.toggleButton.setY(centerY - 9);
-
 
                 if (this.toggleButton.mouseClicked(event, doubleClick)) {
                     return true;
                 }
-
 
                 double mx = event.x();
                 double my = event.y();

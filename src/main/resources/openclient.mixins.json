@@ -3,7 +3,8 @@
 	"package": "com.cactus.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"MixinGui"
+		"MixinGui",
+		"ScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

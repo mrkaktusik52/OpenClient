@@ -4,6 +4,7 @@ import com.cactus.configs.ConfigManager;
 import com.cactus.gui.HudEditorScreen;
 import com.cactus.hud.HudModule;
 import com.cactus.hud.modules.*;
+import com.cactus.social.notification.NotificationManager;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -64,7 +65,6 @@ public class OpenClient implements ModInitializer {
 			}
 		});
 
-
 		ConfigManager.load();
 
 			HudElementRegistry.addLast(
@@ -77,6 +77,10 @@ public class OpenClient implements ModInitializer {
 							if (module.enabled) {
 								module.render(graphics);
 							}
+						}
+
+						if (Minecraft.getInstance().screen == null) {
+							NotificationManager.render(graphics);
 						}
 					}
 			);

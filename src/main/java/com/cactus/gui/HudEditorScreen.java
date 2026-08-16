@@ -4,6 +4,8 @@ import com.cactus.OpenClient;
 import com.cactus.configs.ConfigManager;
 import com.cactus.hud.HudModule;
 import com.cactus.hud.modules.Fps;
+import com.cactus.social.notification.NotificationManager;
+import com.cactus.social.notification.NotificationType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.toasts.SystemToast;
@@ -34,7 +36,6 @@ public class HudEditorScreen extends Screen {
         ).build();
 
         this.addRenderableWidget(buttonWidget);
-
     }
 
 
@@ -84,13 +85,9 @@ public class HudEditorScreen extends Screen {
         int y = (this.height - 128) / 2;
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x, y, 0, 0, 128, 128, 128, 128);
-
-
         for (HudModule module : OpenClient.hudModules) {
             module.renderInEditor(graphics, mouseX, mouseY);
         }
-
-
         super.render(graphics, mouseX, mouseY, delta);
     }
 }
