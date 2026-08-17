@@ -50,8 +50,7 @@ public class ModuleSettingsScreen extends Screen {
                 this.addRenderableWidget(button);
 
                 y += 24;
-            }
-            else if (setting instanceof SliderSetting sliderSetting) {
+            } else if (setting instanceof SliderSetting sliderSetting) {
 
                 SettingSlider slider = new SettingSlider(
                         x,
@@ -81,5 +80,7 @@ public class ModuleSettingsScreen extends Screen {
     }
 
     @Override
-    public boolean isPauseScreen() { return false; }
+    public boolean isPauseScreen() {
+        return false;
+    }
 }

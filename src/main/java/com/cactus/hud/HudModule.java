@@ -68,7 +68,9 @@ public abstract class HudModule {
         render(graphics);
     }
 
-    public void render(GuiGraphics graphics){}
+    public void render(GuiGraphics graphics) {
+    }
+
     public void writeConfig(JsonObject json) {
         json.addProperty("x", getX());
         json.addProperty("y", getY());
@@ -83,9 +85,7 @@ public abstract class HudModule {
                         setting.getId(),
                         booleanSetting.getValue()
                 );
-            }
-
-            else if (setting instanceof SliderSetting sliderSetting) {
+            } else if (setting instanceof SliderSetting sliderSetting) {
                 settingsJson.addProperty(
                         setting.getId(),
                         sliderSetting.getValue()
@@ -95,6 +95,7 @@ public abstract class HudModule {
 
         json.add("settings", settingsJson);
     }
+
     public void readConfig(JsonObject json) {
         if (json.has("x")) {
             setX(json.get("x").getAsInt());
@@ -124,15 +125,14 @@ public abstract class HudModule {
                 booleanSetting.setValue(
                         settingsJson.get(setting.getId()).getAsBoolean()
                 );
-            }
-
-            else if (setting instanceof SliderSetting sliderSetting) {
+            } else if (setting instanceof SliderSetting sliderSetting) {
                 sliderSetting.setValue(
                         settingsJson.get(setting.getId()).getAsDouble()
                 );
             }
         }
     }
+
     public void toggle() {
         enabled = !enabled;
         onToggle();
@@ -166,28 +166,50 @@ public abstract class HudModule {
 
     public Identifier getIcon() {
         return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
-    };
-    public String getId(){return "";
     }
+
+    ;
+
+    public String getId() {
+        return "";
+    }
+
     public boolean hasSettings() {
         return !settings.isEmpty();
     }
+
     public String getName() {
         return "name";
     }
-    public int getHeight(){return height;}
-    public int getWidth(){return width;}
-    public int getX(){return posX;}
-    public int getY(){return posY;}
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getX() {
+        return posX;
+    }
+
+    public int getY() {
+        return posY;
+    }
+
     public void setHeight(int height) {
         this.height = height;
     }
+
     public void setWidth(int width) {
         this.width = width;
     }
+
     public void setX(int posX) {
         this.posX = posX;
     }
+
     public void setY(int posY) {
         this.posY = posY;
     }

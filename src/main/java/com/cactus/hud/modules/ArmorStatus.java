@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 public class ArmorStatus extends HudModule {
     Minecraft client = Minecraft.getInstance();
 
-    private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] {
+    private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{
             EquipmentSlot.HEAD,
             EquipmentSlot.CHEST,
             EquipmentSlot.LEGS,
@@ -70,14 +70,15 @@ public class ArmorStatus extends HudModule {
                     String durabilityText = String.valueOf(currentDurability);
 
                     if (showDurability.getValue()) {
-                    graphics.drawString(
-                            client.font,
-                            durabilityText,
-                            getX() + 20,
-                            getY() + yOffset + 4,
-                            getColor(stack),
-                            true
-                    );}
+                        graphics.drawString(
+                                client.font,
+                                durabilityText,
+                                getX() + 20,
+                                getY() + yOffset + 4,
+                                getColor(stack),
+                                true
+                        );
+                    }
                 }
             }
 

@@ -39,7 +39,6 @@ public class HudEditorScreen extends Screen {
     }
 
 
-
     @Override
     public boolean isPauseScreen() {
         return false;
