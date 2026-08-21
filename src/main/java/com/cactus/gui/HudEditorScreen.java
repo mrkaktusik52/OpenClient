@@ -3,12 +3,11 @@ package com.cactus.gui;
 import com.cactus.OpenClient;
 import com.cactus.configs.ConfigManager;
 import com.cactus.hud.HudModule;
-import com.cactus.hud.modules.Fps;
-import com.cactus.social.notification.NotificationManager;
-import com.cactus.social.notification.NotificationType;
+import com.cactus.hud.Module;
+import com.cactus.social.serverintegration.ServerIntegrationManager;
+import com.cactus.social.serverintegration.servers.CubecraftIntegration;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -26,7 +25,7 @@ public class HudEditorScreen extends Screen {
 
     @Override
     protected void init() {
-        Button buttonWidget = Button.builder(Component.literal("Mods"), (btn) -> {
+        Button modsButton = Button.builder(Component.literal("Mods"), (btn) -> {
             this.minecraft.setScreen(new ModsListScreen(this));
         }).bounds(
                 this.width / 2 - 70,
@@ -35,7 +34,17 @@ public class HudEditorScreen extends Screen {
                 30
         ).build();
 
-        this.addRenderableWidget(buttonWidget);
+        Button settingsButton = Button.builder(Component.literal("Settings"), (btn) -> {
+            this.minecraft.setScreen(new SettingsScreen());
+        }).bounds(
+                this.width / 2 - 70,
+                this.height / 2 + 62,
+                140,
+                20
+        ).build();
+
+        this.addRenderableWidget(modsButton);
+        this.addRenderableWidget(settingsButton);
     }
 
 
@@ -50,8 +59,10 @@ public class HudEditorScreen extends Screen {
         double mouseY = mouseButtonEvent.y();
         int button = mouseButtonEvent.button();
 
-        for (HudModule module : OpenClient.hudModules) {
-            module.mouseReleased(mouseX, mouseY, button);
+        for (Module module : OpenClient.modules) {
+            if (module instanceof HudModule hudModule) {
+                hudModule.mouseReleased(mouseX, mouseY, button);
+            }
         }
 
         return super.mouseReleased(mouseButtonEvent);
@@ -69,8 +80,8 @@ public class HudEditorScreen extends Screen {
         double mouseY = mouseButtonEvent.y();
         int button = mouseButtonEvent.button();
 
-        for (HudModule module : OpenClient.hudModules) {
-            if (module.mouseClicked(mouseX, mouseY, button)) {
+        for (Module module : OpenClient.modules) {
+            if (module instanceof HudModule hudModule && hudModule.mouseClicked(mouseX, mouseY, button)) {
                 return true;
             }
         }
@@ -84,8 +95,10 @@ public class HudEditorScreen extends Screen {
         int y = (this.height - 128) / 2;
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x, y, 0, 0, 128, 128, 128, 128);
-        for (HudModule module : OpenClient.hudModules) {
-            module.renderInEditor(graphics, mouseX, mouseY);
+        for (Module module : OpenClient.modules) {
+            if (module instanceof HudModule hudModule) {
+                hudModule.renderInEditor(graphics, mouseX, mouseY);
+            }
         }
         super.render(graphics, mouseX, mouseY, delta);
     }

@@ -16,16 +16,14 @@ import net.minecraft.resources.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class HudModule {
+public abstract class HudModule extends Module{
     private int height;
     private int width;
     private int posX;
     private int posY;
-    public boolean enabled = true;
     protected int dragOffsetX;
     protected int dragOffsetY;
     protected boolean isDragging;
-    protected final List<Setting<?>> settings = new ArrayList<>();
 
     private boolean isHovered(double mouseX, double mouseY) {
         return mouseX >= this.posX && mouseX <= this.posX + this.width &&
@@ -71,32 +69,18 @@ public abstract class HudModule {
     public void render(GuiGraphics graphics) {
     }
 
+    @Override
     public void writeConfig(JsonObject json) {
+        super.writeConfig(json);
+
         json.addProperty("x", getX());
         json.addProperty("y", getY());
-        json.addProperty("enabled", enabled);
-
-        JsonObject settingsJson = new JsonObject();
-
-        for (Setting<?> setting : settings) {
-
-            if (setting instanceof BooleanSetting booleanSetting) {
-                settingsJson.addProperty(
-                        setting.getId(),
-                        booleanSetting.getValue()
-                );
-            } else if (setting instanceof SliderSetting sliderSetting) {
-                settingsJson.addProperty(
-                        setting.getId(),
-                        sliderSetting.getValue()
-                );
-            }
-        }
-
-        json.add("settings", settingsJson);
     }
 
+    @Override
     public void readConfig(JsonObject json) {
+        super.readConfig(json);
+
         if (json.has("x")) {
             setX(json.get("x").getAsInt());
         }
@@ -104,82 +88,6 @@ public abstract class HudModule {
         if (json.has("y")) {
             setY(json.get("y").getAsInt());
         }
-
-        if (json.has("enabled")) {
-            enabled = json.get("enabled").getAsBoolean();
-        }
-
-        if (!json.has("settings")) {
-            return;
-        }
-
-        JsonObject settingsJson = json.getAsJsonObject("settings");
-
-        for (Setting<?> setting : settings) {
-
-            if (!settingsJson.has(setting.getId())) {
-                continue;
-            }
-
-            if (setting instanceof BooleanSetting booleanSetting) {
-                booleanSetting.setValue(
-                        settingsJson.get(setting.getId()).getAsBoolean()
-                );
-            } else if (setting instanceof SliderSetting sliderSetting) {
-                sliderSetting.setValue(
-                        settingsJson.get(setting.getId()).getAsDouble()
-                );
-            }
-        }
-    }
-
-    public void toggle() {
-        enabled = !enabled;
-        onToggle();
-    }
-
-    protected void onToggle() {
-        if (enabled) {
-            NotificationManager.push(
-                    getName(),
-                    "Module enabled",
-                    NotificationType.INFO,
-                    4000
-            );
-        } else {
-            NotificationManager.push(
-                    getName(),
-                    "Module disabled",
-                    NotificationType.INFO,
-                    4000
-            );
-        }
-    }
-
-    protected void addSetting(Setting<?> setting) {
-        settings.add(setting);
-    }
-
-    public List<Setting<?>> getSettings() {
-        return settings;
-    }
-
-    public Identifier getIcon() {
-        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
-    }
-
-    ;
-
-    public String getId() {
-        return "";
-    }
-
-    public boolean hasSettings() {
-        return !settings.isEmpty();
-    }
-
-    public String getName() {
-        return "name";
     }
 
     public int getHeight() {

@@ -63,7 +63,7 @@ public final class DiscordRPCManager {
                         "Discord",
                         "Discord RPC connected",
                         NotificationType.SUCCESS,
-                        7000
+                        10000
                 );
 
                 updatePresence(
@@ -86,7 +86,7 @@ public final class DiscordRPCManager {
                         "Discord",
                         "Discord RPC disconnected",
                         NotificationType.WARNING,
-                        7000
+                        10000
                 );
             }
         });

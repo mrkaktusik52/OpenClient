@@ -1,9 +1,9 @@
 package com.cactus.gui;
 
 import com.cactus.OpenClient;
+import com.cactus.configs.ConfigManager;
 import com.cactus.hud.HudModule;
-import com.cactus.social.notification.NotificationManager;
-import com.cactus.social.notification.NotificationType;
+import com.cactus.hud.Module;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -33,7 +33,7 @@ public class ModsListScreen extends Screen {
 
         this.list = new ModuleList(this.minecraft, this.width, this.height - 60, 32, 26);
 
-        for (HudModule module : OpenClient.hudModules) {
+        for (Module module : OpenClient.modules) {
             this.list.addModule(module);
         }
 
@@ -68,7 +68,7 @@ public class ModsListScreen extends Screen {
             this.itemH = itemHeight;
         }
 
-        public void addModule(HudModule module) {
+        public void addModule(Module module) {
             this.addEntry(new ModuleEntry(module));
         }
 
@@ -79,10 +79,10 @@ public class ModsListScreen extends Screen {
 
         public class ModuleEntry extends ObjectSelectionList.Entry<ModuleEntry> {
 
-            private final HudModule module;
+            private final Module module;
             private final Button toggleButton;
 
-            public ModuleEntry(HudModule module) {
+            public ModuleEntry(Module module) {
                 this.module = module;
 
 
@@ -177,4 +177,10 @@ public class ModsListScreen extends Screen {
             }
         }
     }
+    @Override
+    public void onClose() {
+        ConfigManager.save();
+        super.onClose();
+    }
+
 }

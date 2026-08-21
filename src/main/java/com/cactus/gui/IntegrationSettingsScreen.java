@@ -1,25 +1,24 @@
 package com.cactus.gui;
 
 import com.cactus.configs.ConfigManager;
-import com.cactus.hud.HudModule;
-import com.cactus.hud.Module;
 import com.cactus.settings.BooleanSetting;
 import com.cactus.settings.Setting;
 import com.cactus.settings.SettingSlider;
 import com.cactus.settings.SliderSetting;
-import net.minecraft.client.gui.GuiGraphics;
+import com.cactus.social.serverintegration.BaseServerIntegration;
+import com.cactus.social.serverintegration.ServerIntegration;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-public class ModuleSettingsScreen extends Screen {
+public class IntegrationSettingsScreen extends Screen {
     private final Screen parent;
-    private final Module module;
+    private final ServerIntegration integration;
 
-    public ModuleSettingsScreen(Screen parent, Module module) {
-        super(Component.literal(module.getName() + " Settings"));
+    public IntegrationSettingsScreen(Screen parent, ServerIntegration integration) {
+        super(Component.literal(integration.getName() + " Settings"));
         this.parent = parent;
-        this.module = module;
+        this.integration = integration;
     }
 
     @Override
@@ -28,7 +27,7 @@ public class ModuleSettingsScreen extends Screen {
         int y = 50;
         int width = 300;
 
-        for (Setting<?> setting : module.getSettings()) {
+        for (Setting<?> setting : integration.getSettings()) {
 
             if (setting instanceof BooleanSetting booleanSetting) {
 
@@ -36,22 +35,34 @@ public class ModuleSettingsScreen extends Screen {
                         Component.literal(
                                 booleanSetting.getName()
                                         + ": "
-                                        + (booleanSetting.getValue() ? "ON" : "OFF")
+                                        + (booleanSetting.getValue()
+                                        ? "ON"
+                                        : "OFF")
                         ),
                         btn -> {
                             booleanSetting.toggle();
 
-                            btn.setMessage(Component.literal(
-                                    booleanSetting.getName()
-                                            + ": "
-                                            + (booleanSetting.getValue() ? "ON" : "OFF")
-                            ));
+                            btn.setMessage(
+                                    Component.literal(
+                                            booleanSetting.getName()
+                                                    + ": "
+                                                    + (booleanSetting.getValue()
+                                                    ? "ON"
+                                                    : "OFF")
+                                    )
+                            );
                         }
-                ).bounds(x, y, width, 20).build();
+                ).bounds(
+                        x,
+                        y,
+                        width,
+                        20
+                ).build();
 
                 this.addRenderableWidget(button);
 
                 y += 24;
+
             } else if (setting instanceof SliderSetting sliderSetting) {
 
                 SettingSlider slider = new SettingSlider(
@@ -71,22 +82,19 @@ public class ModuleSettingsScreen extends Screen {
                 Button.builder(
                         Component.literal("Done"),
                         btn -> this.minecraft.setScreen(parent)
-                ).bounds(this.width / 2 - 100, this.height - 28, 200, 20).build()
+                ).bounds(
+                        this.width / 2 - 100,
+                        this.height - 28,
+                        200,
+                        20
+                ).build()
         );
     }
-
-    @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        super.render(graphics, mouseX, mouseY, delta);
-        graphics.drawCenteredString(this.font, this.title, this.width / 2, 12, 0xFFFFFFFF);
-    }
-
     @Override
     public void onClose() {
         ConfigManager.save();
         super.onClose();
     }
-
     @Override
     public boolean isPauseScreen() {
         return false;

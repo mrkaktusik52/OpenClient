@@ -3,6 +3,7 @@ package com.cactus;
 import com.cactus.configs.ConfigManager;
 import com.cactus.gui.HudEditorScreen;
 import com.cactus.hud.HudModule;
+import com.cactus.hud.Module;
 import com.cactus.hud.modules.*;
 import com.cactus.social.discord.DiscordRPCManager;
 import com.cactus.social.notification.NotificationManager;
@@ -35,22 +36,27 @@ public class OpenClient implements ModInitializer {
 
     public static final String MOD_ID = "openclient";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final List<HudModule> hudModules = new ArrayList<>();
+    public static final List<Module> modules = new ArrayList<>();
     KeyMapping openScreen;
     Minecraft client = Minecraft.getInstance();
 
     @Override
     public void onInitialize() {
 
-        hudModules.add(new Fps());
-        hudModules.add(new SprintToggle());
-        hudModules.add(new Coords());
-        hudModules.add(new Biome());
-        hudModules.add(new Ping());
-        hudModules.add(new ArmorStatus());
-        hudModules.add(new PotionHud());
-        hudModules.add(new Keystrokes());
-        hudModules.add(new TargetHud());
+        modules.add(new Fps());
+        modules.add(new SprintToggle());
+        modules.add(new Coords());
+        modules.add(new Biome());
+        modules.add(new Ping());
+        modules.add(new ArmorStatus());
+        modules.add(new PotionHud());
+        modules.add(new Keystrokes());
+        modules.add(new TargetHud());
+
+        ServerIntegrationManager.register(
+                new CubecraftIntegration()
+        );
+
 
         openScreen = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.cactus.openclient.openhudeditor",
@@ -85,9 +91,9 @@ public class OpenClient implements ModInitializer {
 
                     if (client.screen instanceof HudEditorScreen) return;
 
-                    for (HudModule module : hudModules) {
-                        if (module.enabled) {
-                            module.render(graphics);
+                    for (Module module : modules) {
+                        if (module.enabled && module instanceof HudModule hudModule) {
+                            hudModule.render(graphics);
                         }
                     }
 
@@ -97,9 +103,6 @@ public class OpenClient implements ModInitializer {
                 }
         );
 
-		ServerIntegrationManager.register(
-				new CubecraftIntegration()
-		);
 
 		ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
 			Minecraft mc = Minecraft.getInstance();
@@ -120,6 +123,8 @@ public class OpenClient implements ModInitializer {
 
 			String host = mc.getCurrentServer().ip;
 
+            ServerIntegrationManager.selectIntegration(host);
+
             if (ServerIntegrationManager.getActiveIntegration() != null) {
                 DiscordRPCManager.updatePresence(
                         "Playing Multiplayer",
@@ -131,10 +136,6 @@ public class OpenClient implements ModInitializer {
                         "Unknown Server"
                 );
             }
-
-			ServerIntegrationManager.selectIntegration(host);
-
-
 		});
 
         ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
@@ -143,6 +144,15 @@ public class OpenClient implements ModInitializer {
 
         ClientLifecycleEvents.CLIENT_STOPPING.register(client -> {
             DiscordRPCManager.shutdown();
+        });
+
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ServerIntegrationManager.clearActiveIntegration();
+
+            DiscordRPCManager.updatePresence(
+                    "OpenClient",
+                    "In Main Menu"
+            );
         });
 
     }

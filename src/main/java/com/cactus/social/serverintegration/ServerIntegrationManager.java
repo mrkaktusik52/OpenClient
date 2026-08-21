@@ -45,6 +45,14 @@ public final class ServerIntegrationManager {
         return activeIntegration;
     }
 
+    public static void clearActiveIntegration() {
+        activeIntegration = null;
+    }
+
+    public static List<ServerIntegration> getIntegrations() {
+        return List.copyOf(integrations);
+    }
+
     public static Matcher matchMessage(Pattern pattern, String message) {
         Matcher matcher = pattern.matcher(message);
 
