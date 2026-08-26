@@ -9,6 +9,7 @@ import com.cactus.social.discord.DiscordRPCManager;
 import com.cactus.social.notification.NotificationManager;
 import com.cactus.social.serverintegration.ServerIntegrationManager;
 import com.cactus.social.serverintegration.servers.CubecraftIntegration;
+import com.cactus.social.serverintegration.servers.DonutSmpIntegration;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
@@ -55,6 +56,10 @@ public class OpenClient implements ModInitializer {
 
         ServerIntegrationManager.register(
                 new CubecraftIntegration()
+        );
+
+        ServerIntegrationManager.register(
+                new DonutSmpIntegration()
         );
 
 
