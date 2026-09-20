@@ -251,7 +251,7 @@ public class DonutSmpIntegration extends BaseServerIntegration {
 
         Matcher tpaHereRequestMatcher =
                 ServerIntegrationManager.matchMessage(
-                        TPA_REQUEST,
+                        TPA_HERE_REQUEST,
                         message
                 );
 

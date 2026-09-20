@@ -1,5 +1,7 @@
 package com.cactus.mixin;
 
+import com.cactus.OpenClient;
+import com.cactus.hud.modules.PotionHud;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;

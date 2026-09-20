@@ -6,6 +6,7 @@ import com.cactus.hud.HudModule;
 import com.cactus.hud.Module;
 import com.cactus.hud.modules.*;
 import com.cactus.social.discord.DiscordRPCManager;
+import com.cactus.social.friends.FriendsManager;
 import com.cactus.social.notification.NotificationManager;
 import com.cactus.social.serverintegration.ServerIntegrationManager;
 import com.cactus.social.serverintegration.servers.CubecraftIntegration;
@@ -41,6 +42,10 @@ public class OpenClient implements ModInitializer {
     KeyMapping openScreen;
     Minecraft client = Minecraft.getInstance();
 
+    public static void register(Module module) {
+        modules.add(module);
+    }
+
     @Override
     public void onInitialize() {
 
@@ -61,7 +66,7 @@ public class OpenClient implements ModInitializer {
         ServerIntegrationManager.register(
                 new DonutSmpIntegration()
         );
-
+        FriendsManager.addFriend("d3ffar");
 
         openScreen = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.cactus.openclient.openhudeditor",

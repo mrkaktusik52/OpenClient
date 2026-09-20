@@ -96,6 +96,22 @@ public class SettingsScreen extends Screen {
                         height
                 ).build()
         );
+
+        y += height + gap;
+
+        this.addRenderableWidget(
+                Button.builder(
+                        Component.literal("Friends"),
+                        btn -> {
+                            this.minecraft.setScreen(new FriendsScreen());
+                        }
+                ).bounds(
+                        x,
+                        y,
+                        width,
+                        height
+                ).build()
+        );
     }
     @Override
     public void onClose() {
