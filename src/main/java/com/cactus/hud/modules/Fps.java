@@ -8,10 +8,8 @@ public class Fps extends HudModule {
     public Fps() {
         setX(1);
         setY(10);
-    }
-    @Override
-    public String getName() {
-        return "FPS";
+        setName("FPS");
+        setId("fps");
     }
 
     @Override
@@ -32,9 +30,4 @@ public class Fps extends HudModule {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
 //    };
 
-    @Override
-    public String getId() {
-        return "fps";
-    }
 }
-

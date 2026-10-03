@@ -37,14 +37,24 @@ public class HudEditorScreen extends Screen {
         Button settingsButton = Button.builder(Component.literal("Settings"), (btn) -> {
             this.minecraft.setScreen(new SettingsScreen());
         }).bounds(
+                this.width / 2 + 1,
+                this.height / 2 + 62,
+                69,
+                20
+        ).build();
+
+        Button socialButton = Button.builder(Component.literal("Social"), (btn) -> {
+            this.minecraft.setScreen(new SettingsScreen());
+        }).bounds(
                 this.width / 2 - 70,
                 this.height / 2 + 62,
-                140,
+                69,
                 20
         ).build();
 
         this.addRenderableWidget(modsButton);
         this.addRenderableWidget(settingsButton);
+        this.addRenderableWidget(socialButton);
     }
 
 

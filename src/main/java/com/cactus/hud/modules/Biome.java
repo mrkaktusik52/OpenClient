@@ -9,12 +9,10 @@ public class Biome extends HudModule {
     public Biome() {
         setX(1);
         setY(50);
+        setName("Biome Display");
+        setId("biome");
 
         addSetting(showPrefix);
-    }
-    @Override
-    public String getName() {
-        return "Biome Display";
     }
 
     @Override
@@ -60,8 +58,4 @@ public class Biome extends HudModule {
                     true
             );
 
-    @Override
-    public String getId() {
-        return "biome";
-    }
 }

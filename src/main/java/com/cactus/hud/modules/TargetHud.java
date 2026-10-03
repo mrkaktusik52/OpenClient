@@ -39,6 +39,8 @@ public class TargetHud extends HudModule {
     public TargetHud() {
         setX(500);
         setY(300);
+        setName("Target HUD");
+        setId("targethud");
 
         AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
             if (player == Minecraft.getInstance().player) {
@@ -52,11 +54,6 @@ public class TargetHud extends HudModule {
         addSetting(showArmor);
         addSetting(showHealth);
         addSetting(timeout);
-    }
-
-    @Override
-    public String getName() {
-        return "Target HUD";
     }
 
     private void renderHearts(
@@ -308,8 +305,4 @@ public class TargetHud extends HudModule {
                     0.5
             );
 
-    @Override
-    public String getId() {
-        return "targethud";
-    }
 }

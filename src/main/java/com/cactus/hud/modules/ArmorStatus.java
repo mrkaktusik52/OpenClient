@@ -22,13 +22,10 @@ public class ArmorStatus extends HudModule {
         setY(50);
         setHeight(15 * 4 + 1);
         setWidth(16);
+        setName("Armor Status");
+        setId("armorstatus");
 
         addSetting(showDurability);
-    }
-
-    @Override
-    public String getName() {
-        return "Armor Status";
     }
 
     private int getColor(ItemStack stack) {
@@ -93,8 +90,4 @@ public class ArmorStatus extends HudModule {
                     true
             );
 
-    @Override
-    public String getId() {
-        return "armorstatus";
-    }
 }

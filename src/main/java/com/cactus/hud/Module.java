@@ -15,6 +15,9 @@ import java.util.List;
 public class Module {
     public boolean enabled = true;
     protected final List<Setting<?>> settings = new ArrayList<>();
+    protected String name = "Name";
+    protected String id = "id";
+
     public void toggle() {
         enabled = !enabled;
         onToggle();
@@ -105,15 +108,19 @@ public class Module {
         return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
     }
 
-    public String getId() {
-        return "";
+    public void setName(String name) {
+        this.name = name;
     }
-
+    public void setId(String id) {
+        this.id = id;
+    }
     public boolean hasSettings() {
         return !settings.isEmpty();
     }
-
+    public String getId() {
+        return id;
+    }
     public String getName() {
-        return "name";
+        return name;
     }
 }

@@ -58,6 +58,7 @@ public class OpenClient implements ModInitializer {
         modules.add(new PotionHud());
         modules.add(new Keystrokes());
         modules.add(new TargetHud());
+        modules.add(new TotemCounter());
 
         ServerIntegrationManager.register(
                 new CubecraftIntegration()

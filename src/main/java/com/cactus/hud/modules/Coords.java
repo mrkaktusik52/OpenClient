@@ -9,16 +9,13 @@ public class Coords extends HudModule {
     public Coords() {
         setX(100);
         setY(10);
+        setName("Coordinates");
+        setId("coordinates");
 
         addSetting(showX);
         addSetting(showY);
         addSetting(showZ);
     }
-    @Override
-    public String getName() {
-        return "Coordinates";
-    }
-
     @Override
     public void render(GuiGraphics graphics) {
         if (!enabled) return;
@@ -128,8 +125,4 @@ public class Coords extends HudModule {
     private final BooleanSetting showY = new BooleanSetting("Show Y", "show_y", true);
     private final BooleanSetting showZ = new BooleanSetting("Show Z", "show_z", true);
 
-    @Override
-    public String getId() {
-        return "coordinates";
-    }
 }

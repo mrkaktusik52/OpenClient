@@ -12,6 +12,8 @@ public class Keystrokes extends HudModule {
         setY(500);
         setHeight(100);
         setWidth(50);
+        setName("Keystrokes");
+        setId("keystrokes");
     }
 
 
@@ -91,10 +93,4 @@ public class Keystrokes extends HudModule {
         graphics.drawString(font, label, textX, textY, colorText, true);
     }
 
-    @Override
-    public String getName() { return "Keystrokes"; }
-    @Override
-    public String getId() {
-        return "keystrokes";
-    }
 }

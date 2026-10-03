@@ -23,11 +23,8 @@ public class PotionHud extends HudModule {
         setY(300);
         setWidth(82);
         setHeight(15);
-    }
-
-    @Override
-    public String getName() {
-        return "Potions HUD";
+        setName("Potions HUD");
+        setId("potionhud");
     }
 
     @Override
@@ -88,8 +85,4 @@ public class PotionHud extends HudModule {
         return String.format("%d:%02d", minutes, seconds);
     }
 
-    @Override
-    public String getId() {
-        return "potionhud";
-    }
 }

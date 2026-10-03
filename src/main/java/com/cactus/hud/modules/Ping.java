@@ -8,11 +8,9 @@ public class Ping extends HudModule {
     public Ping() {
         setX(1);
         setY(100);
+        setName("Ping Display");
+        setId("ping");
         enabled = false;
-    }
-    @Override
-    public String getName() {
-        return "Ping Display(Doesn't work properly)";
     }
 
     @Override
@@ -44,8 +42,4 @@ public class Ping extends HudModule {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
 //    };
 
-    @Override
-    public String getId() {
-        return "ping";
-    }
 }

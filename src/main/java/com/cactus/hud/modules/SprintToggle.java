@@ -10,11 +10,8 @@ public class SprintToggle extends HudModule {
         setY(10);
         setWidth(50);
         setHeight(20);
-    }
-
-    @Override
-    public String getName() {
-        return "Sprint Display";
+        setName("Sprint Display");
+        setId("sprintdisplay");
     }
 
     Minecraft client = Minecraft.getInstance();
@@ -65,10 +62,5 @@ public class SprintToggle extends HudModule {
 //    public Identifier getIcon() {
 //        return Identifier.fromNamespaceAndPath(OpenClient.MOD_ID, "textures/gui/logo-transperent.png");
 //    };
-@Override
-public String getId() {
-    return "sprintdisplay";
 }
-}
-
 
