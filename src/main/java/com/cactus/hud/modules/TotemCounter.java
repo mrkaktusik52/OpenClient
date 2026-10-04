@@ -26,13 +26,25 @@ public class TotemCounter extends HudModule {
         int count = 0;
 
         assert mc.player != null;
+
         for (ItemStack stack : mc.player.getInventory().getNonEquipmentItems()) {
             if (stack.is(Items.TOTEM_OF_UNDYING)) {
                 count += stack.getCount();
             }
         }
 
-        graphics.renderItem(new ItemStack(Items.TOTEM_OF_UNDYING), getX(), getY());
+        ItemStack offhand = mc.player.getOffhandItem();
+
+        if (offhand.is(Items.TOTEM_OF_UNDYING)) {
+            count += offhand.getCount();
+        }
+
+        graphics.renderItem(
+                new ItemStack(Items.TOTEM_OF_UNDYING),
+                getX(),
+                getY()
+        );
+
         graphics.drawString(
                 mc.font,
                 String.valueOf(count),

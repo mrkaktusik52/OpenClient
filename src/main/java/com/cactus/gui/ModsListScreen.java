@@ -4,6 +4,7 @@ import com.cactus.OpenClient;
 import com.cactus.configs.ConfigManager;
 import com.cactus.hud.HudModule;
 import com.cactus.hud.Module;
+import com.cactus.hud.ModuleManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -33,7 +34,7 @@ public class ModsListScreen extends Screen {
 
         this.list = new ModuleList(this.minecraft, this.width, this.height - 60, 32, 26);
 
-        for (Module module : OpenClient.modules) {
+        for (Module module : ModuleManager.getModules()) {
             this.list.addModule(module);
         }
 
@@ -87,12 +88,12 @@ public class ModsListScreen extends Screen {
 
 
                 this.toggleButton = Button.builder(
-                        Component.translatable(module.enabled ? "key.kaktus.list.on" : "key.kaktus.list.off"),
+                        Component.translatable(module.isEnabled() ? "key.kaktus.list.on" : "key.kaktus.list.off"),
                         btn -> {
 
                             module.toggle();
 
-                            btn.setMessage(Component.translatable(module.enabled ? "key.kaktus.list.on" : "key.kaktus.list.off"));
+                            btn.setMessage(Component.translatable(module.isEnabled() ? "key.kaktus.list.on" : "key.kaktus.list.off"));
                         }
                 ).bounds(0, 0, 44, 18).build();
             }

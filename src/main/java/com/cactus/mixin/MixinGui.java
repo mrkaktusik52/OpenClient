@@ -1,6 +1,7 @@
 package com.cactus.mixin;
 
 import com.cactus.OpenClient;
+import com.cactus.hud.ModuleManager;
 import com.cactus.hud.modules.PotionHud;
 import com.cactus.hud.Module;
 import net.minecraft.client.DeltaTracker;
@@ -20,8 +21,8 @@ public class MixinGui {
             DeltaTracker deltaTracker,
             CallbackInfo ci
     ) {
-        for (Module module : OpenClient.modules) {
-            if (module instanceof PotionHud potionHud && potionHud.enabled) {
+        for (Module module : ModuleManager.getModules()) {
+            if (module instanceof PotionHud potionHud && potionHud.isEnabled()) {
                 ci.cancel();
                 return;
             }

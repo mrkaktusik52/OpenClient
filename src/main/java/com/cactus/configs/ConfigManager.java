@@ -2,6 +2,7 @@ package com.cactus.configs;
 
 import com.cactus.OpenClient;
 import com.cactus.hud.Module;
+import com.cactus.hud.ModuleManager;
 import com.cactus.settings.BooleanSetting;
 import com.cactus.settings.Setting;
 import com.cactus.settings.SliderSetting;
@@ -197,7 +198,7 @@ public class ConfigManager {
     public static void save() {
         ensureDirectories();
 
-        for (Module module : OpenClient.modules) {
+        for (Module module : ModuleManager.getModules()) {
             Path file = MODULES_DIR.resolve(module.getId() + ".json");
 
             JsonObject json = new JsonObject();
@@ -219,7 +220,7 @@ public class ConfigManager {
     public static void load() {
         ensureDirectories();
 
-        for (Module module : OpenClient.modules) {
+        for (Module module : ModuleManager.getModules()) {
             Path file = MODULES_DIR.resolve(module.getId() + ".json");
 
             if (!Files.exists(file)) {

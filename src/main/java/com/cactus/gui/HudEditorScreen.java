@@ -4,6 +4,7 @@ import com.cactus.OpenClient;
 import com.cactus.configs.ConfigManager;
 import com.cactus.hud.HudModule;
 import com.cactus.hud.Module;
+import com.cactus.hud.ModuleManager;
 import com.cactus.social.serverintegration.ServerIntegrationManager;
 import com.cactus.social.serverintegration.servers.CubecraftIntegration;
 import net.minecraft.client.gui.GuiGraphics;
@@ -69,7 +70,7 @@ public class HudEditorScreen extends Screen {
         double mouseY = mouseButtonEvent.y();
         int button = mouseButtonEvent.button();
 
-        for (Module module : OpenClient.modules) {
+        for (Module module : ModuleManager.getModules()) {
             if (module instanceof HudModule hudModule) {
                 hudModule.mouseReleased(mouseX, mouseY, button);
             }
@@ -90,7 +91,7 @@ public class HudEditorScreen extends Screen {
         double mouseY = mouseButtonEvent.y();
         int button = mouseButtonEvent.button();
 
-        for (Module module : OpenClient.modules) {
+        for (Module module : ModuleManager.getModules()) {
             if (module instanceof HudModule hudModule && hudModule.mouseClicked(mouseX, mouseY, button)) {
                 return true;
             }
@@ -105,7 +106,7 @@ public class HudEditorScreen extends Screen {
         int y = (this.height - 128) / 2;
 
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x, y, 0, 0, 128, 128, 128, 128);
-        for (Module module : OpenClient.modules) {
+        for (Module module : ModuleManager.getModules()) {
             if (module instanceof HudModule hudModule) {
                 hudModule.renderInEditor(graphics, mouseX, mouseY);
             }

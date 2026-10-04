@@ -3,6 +3,7 @@ package com.cactus.social.notification;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 
 import java.util.ArrayList;
@@ -41,6 +42,36 @@ public final class NotificationManager {
         if (mc.player != null) {
             mc.player.playSound(
                     SoundEvents.UI_TOAST_IN,
+                    0.5F,
+                    1.2F
+            );
+        }
+
+        return notification;
+    }
+
+    public static Notification push(
+            String title,
+            String message,
+            NotificationType type,
+            long duration,
+            SoundEvent sound
+    ) {
+        Notification notification =
+                new Notification(
+                        title,
+                        message,
+                        type,
+                        duration
+                );
+
+        notifications.add(notification);
+
+        Minecraft mc = Minecraft.getInstance();
+
+        if (mc.player != null) {
+            mc.player.playSound(
+                    sound,
                     0.5F,
                     1.2F
             );

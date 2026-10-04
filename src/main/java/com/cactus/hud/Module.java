@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Module {
-    public boolean enabled = true;
+    protected boolean enabled = true;
     protected final List<Setting<?>> settings = new ArrayList<>();
     protected String name = "Name";
     protected String id = "id";
@@ -39,6 +39,17 @@ public class Module {
                     4000
             );
         }
+    }
+
+    public void setEnabled(boolean enabled) {
+        if (this.enabled == enabled) return;
+
+        this.enabled = enabled;
+        onToggle();
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void writeConfig(JsonObject json) {

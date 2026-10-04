@@ -4,6 +4,7 @@ import com.cactus.configs.ConfigManager;
 import com.cactus.gui.HudEditorScreen;
 import com.cactus.hud.HudModule;
 import com.cactus.hud.Module;
+import com.cactus.hud.ModuleManager;
 import com.cactus.hud.modules.*;
 import com.cactus.social.discord.DiscordRPCManager;
 import com.cactus.social.friends.FriendsManager;
@@ -38,27 +39,23 @@ public class OpenClient implements ModInitializer {
 
     public static final String MOD_ID = "openclient";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final List<Module> modules = new ArrayList<>();
     KeyMapping openScreen;
     Minecraft client = Minecraft.getInstance();
-
-    public static void register(Module module) {
-        modules.add(module);
-    }
 
     @Override
     public void onInitialize() {
 
-        modules.add(new Fps());
-        modules.add(new SprintToggle());
-        modules.add(new Coords());
-        modules.add(new Biome());
-        modules.add(new Ping());
-        modules.add(new ArmorStatus());
-        modules.add(new PotionHud());
-        modules.add(new Keystrokes());
-        modules.add(new TargetHud());
-        modules.add(new TotemCounter());
+        ModuleManager.register(new Fps());
+        ModuleManager.register(new SprintToggle());
+        ModuleManager.register(new Coords());
+        ModuleManager.register(new Biome());
+        ModuleManager.register(new Ping());
+        ModuleManager.register(new ArmorStatus());
+        ModuleManager.register(new PotionHud());
+        ModuleManager.register(new Keystrokes());
+        ModuleManager.register(new TargetHud());
+        ModuleManager.register(new TotemCounter());
+        ModuleManager.register(new TestModule());
 
         ServerIntegrationManager.register(
                 new CubecraftIntegration()
@@ -102,8 +99,8 @@ public class OpenClient implements ModInitializer {
 
                     if (client.screen instanceof HudEditorScreen) return;
 
-                    for (Module module : modules) {
-                        if (module.enabled && module instanceof HudModule hudModule) {
+                    for (Module module : ModuleManager.getModules()) {
+                        if (module.isEnabled() && module instanceof HudModule hudModule) {
                             hudModule.render(graphics);
                         }
                     }
